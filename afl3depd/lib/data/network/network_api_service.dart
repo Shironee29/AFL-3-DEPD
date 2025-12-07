@@ -14,7 +14,8 @@ class NetworkApiServices implements BaseApiServices {
   @override
   Future<dynamic> getApiResponse(String endpoint) async {
     try {
-      final uri = Uri.https(Const.baseUrl, Const.subUrl + endpoint);
+      final urlString = "https://${Const.baseUrl}${Const.subUrl}$endpoint";
+      final uri = Uri.parse(urlString);
 
       // Log request GET (untuk debug: URL + header).
       _logRequest('GET', uri, Const.apiKey);

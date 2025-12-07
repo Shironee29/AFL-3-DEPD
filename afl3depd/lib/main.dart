@@ -3,12 +3,13 @@ import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:afl3depd/shared/style.dart';
 import 'package:afl3depd/view/pages/pages.dart';
+import 'package:google_fonts/google_fonts.dart';
+// Import ViewModel
 import 'package:afl3depd/viewmodel/home_viewmodel.dart';
+import 'package:afl3depd/viewmodel/international_viewmodel.dart'; // 1. Tambahkan import ini
 
 Future<void> main() async {
-  // Memastikan binding Flutter sudah diinisialisasi sebelum menjalankan aplikasi
   WidgetsFlutterBinding.ensureInitialized();
-  // Memuat file .env sebelum diakses widget
   await dotenv.load(fileName: ".env");
 
   runApp(const MyApp());
@@ -19,17 +20,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => HomeViewModel(),
+    // 2. Ganti ChangeNotifierProvider tunggal menjadi MultiProvider
+    return MultiProvider(
+      providers: [
+        // Daftarkan HomeViewModel
+        ChangeNotifierProvider(create: (_) => HomeViewModel()),
+        // 3. Daftarkan InternationalViewModel di sini
+        ChangeNotifierProvider(create: (_) => InternationalViewModel()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter x RajaOngkir API',
         theme: ThemeData(
           primaryColor: Style.blue800,
           scaffoldBackgroundColor: Style.grey50,
-          textTheme: Theme.of(
-            context,
-          ).textTheme.apply(bodyColor: Style.black, displayColor: Style.black),
+          textTheme: GoogleFonts.poppinsTextTheme(
+            Theme.of(context).textTheme,
+          ).apply(bodyColor: Style.black, displayColor: Style.black),
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ButtonStyle(
               backgroundColor: WidgetStateProperty.all<Color>(Style.blue800),
@@ -57,7 +64,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         initialRoute: '/',
-        routes: {'/': (context) => const HomePage()},
+        routes: {'/': (context) => const MainPage()},
       ),
     );
   }

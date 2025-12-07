@@ -1,6 +1,4 @@
-// import 'package:depd_mvvm_2025/data/response/status.dart';
-
-import 'status.dart';
+import 'package:afl3depd/data/response/status.dart';
 
 // Kelas generik untuk membungkus respon API: status, data, dan pesan
 class ApiResponse<T> {

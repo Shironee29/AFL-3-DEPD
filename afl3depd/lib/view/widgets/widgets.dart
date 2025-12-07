@@ -4,3 +4,4 @@ import 'package:afl3depd/model/model.dart';
 
 part 'card_cost.dart';
 part 'bottom_sheets_cost.dart';
+part 'card_international_cost.dart';
