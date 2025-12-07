@@ -6,7 +6,7 @@ class Domestic extends StatefulWidget{
 State<Domestic> createState()=>_DomesticState();
 }
 class _DomesticState extends State<Domestic>{
-  final RajaOngkirService api = RajaOngkirService();
+  // final RajaOngkirService api = RajaOngkirService();
   String? selectedCourier = 'JNE';
   
 }

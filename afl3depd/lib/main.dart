@@ -1,3 +1,6 @@
+import 'package:afl3depd/pages/domestic.dart';
+import 'package:afl3depd/pages/extra.dart';
+import 'package:afl3depd/pages/international.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
