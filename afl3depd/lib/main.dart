@@ -1,52 +1,64 @@
-import 'package:afl3depd/pages/domestic.dart';
-import 'package:afl3depd/pages/extra.dart';
-import 'package:afl3depd/pages/international.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:afl3depd/shared/style.dart';
+import 'package:afl3depd/view/pages/pages.dart';
+import 'package:afl3depd/viewmodel/home_viewmodel.dart';
 
-void main(){
-  runApp(const RajaOngkirApp());
+Future<void> main() async {
+  // Memastikan binding Flutter sudah diinisialisasi sebelum menjalankan aplikasi
+  WidgetsFlutterBinding.ensureInitialized();
+  // Memuat file .env sebelum diakses widget
+  await dotenv.load(fileName: ".env");
+
+  runApp(const MyApp());
 }
-class RajaOngkirApp extends StatelessWidget{
-  const RajaOngkirApp({super.key});
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-title: 'RajaOngkir',
-theme: ThemeData(textTheme: GoogleFonts.poppinsTextTheme(),primarySwatch: Colors.blue, scaffoldBackgroundColor: const Color(0xFFF6F8FB),
-),
-home: const MainApp(),
-debugShowCheckedModeBanner: false,
+    return ChangeNotifierProvider(
+      create: (_) => HomeViewModel(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter x RajaOngkir API',
+        theme: ThemeData(
+          primaryColor: Style.blue800,
+          scaffoldBackgroundColor: Style.grey50,
+          textTheme: Theme.of(
+            context,
+          ).textTheme.apply(bodyColor: Style.black, displayColor: Style.black),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ButtonStyle(
+              backgroundColor: WidgetStateProperty.all<Color>(Style.blue800),
+              foregroundColor: WidgetStateProperty.all<Color>(Style.white),
+              padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                const EdgeInsets.all(16),
+              ),
+            ),
+          ),
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(foregroundColor: Style.blue800),
+          ),
+          inputDecorationTheme: InputDecorationTheme(
+            labelStyle: TextStyle(color: Style.grey500),
+            floatingLabelStyle: TextStyle(color: Style.blue800),
+            hintStyle: TextStyle(color: Style.grey500),
+            iconColor: Style.grey500,
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Style.grey500),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Style.blue800, width: 2),
+            ),
+          ),
+          useMaterial3: true,
+        ),
+        initialRoute: '/',
+        routes: {'/': (context) => const HomePage()},
+      ),
     );
-  }
-}
-class MainApp extends StatefulWidget{
-  const MainApp({super.key});
-  @override
-  State<MainApp> createState()=> _MainAppState();
-}
-class _MainAppState extends State<MainApp> {
-  int _seletedIndex = 0;
-  final pages = const [
-    Domestic(),
-    International(),
-    Extra(),
-  ];
-  @override
-  Widget build(BuildContext context) {
-   return Scaffold(
-    body: pages[_seletedIndex],
-    bottomNavigationBar: BottomNavigationBar(
-      currentIndex: _seletedIndex,
-      elevation: 8,
-      selectedItemColor: Colors.grey,
-      onTap: (i) => setState(() => _seletedIndex = i),
-      items: const [
-        BottomNavigationBarItem(icon:Icon(Icons.home), label:'Domestic'),
-        BottomNavigationBarItem(icon:Icon(Icons.public), label:'International'),
-        BottomNavigationBarItem(icon:Icon(Icons.info_outline), label:'About'),
-      ],
-    ),
-   );
   }
 }
