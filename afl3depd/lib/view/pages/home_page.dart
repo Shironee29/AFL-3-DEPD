@@ -17,12 +17,17 @@ class _HomePageState extends State<HomePage> {
   // Daftar pilihan kurir yang tersedia
   final List<String> courierOptions = ["jne", "pos", "tiki", "lion", "sicepat"];
   String selectedCourier = "jne";
-
-  // ID provinsi dan kota untuk lokasi asal dan tujuan
-  int? selectedProvinceOriginId;
+  String? selectedProvinceOriginId;      
+  String? selectedProvinceDestinationId; 
+  
+  // ID Kota tetap int (karena model City.dart kamu masih int)
   int? selectedCityOriginId;
-  int? selectedProvinceDestinationId;
   int? selectedCityDestinationId;
+  // ID provinsi dan kota untuk lokasi asal dan tujuan
+  // int? selectedProvinceOriginId;
+  // int? selectedCityOriginId;
+  // int? selectedProvinceDestinationId;
+  // int? selectedCityDestinationId;
 
   // Menimpa method bawaan State
   @override
@@ -135,13 +140,13 @@ class _HomePageState extends State<HomePage> {
                                     return const Text('Tidak ada provinsi');
                                   }
 
-                                  return DropdownButton<int>(
+                                  return DropdownButton<String>(
                                     isExpanded: true,
                                     value: selectedProvinceOriginId, // Masih null saat awal
                                     hint: const Text('Pilih provinsi'),
                                     items: provinces
                                         .map(
-                                          (p) => DropdownMenuItem<int>(
+                                          (p) => DropdownMenuItem<String>(
                                             value: p.id,
                                             child: Text(p.name ?? ''),
                                           ),
@@ -293,13 +298,13 @@ class _HomePageState extends State<HomePage> {
                                     return const Text('Tidak ada provinsi');
                                   }
 
-                                  return DropdownButton<int>(
+                                  return DropdownButton<String>(
                                     isExpanded: true,
                                     value: selectedProvinceDestinationId,
                                     hint: const Text('Pilih provinsi'),
                                     items: provinces
                                         .map(
-                                          (p) => DropdownMenuItem<int>(
+                                          (p) => DropdownMenuItem<String>(
                                             value: p.id,
                                             child: Text(p.name ?? ''),
                                           ),

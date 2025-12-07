@@ -1,5 +1,5 @@
-import 'package:depd_mvvm_2025/data/network/network_api_service.dart';
-import 'package:depd_mvvm_2025/model/model.dart';
+import 'package:afl3depd/data/network/network_api_service.dart';
+import 'package:afl3depd/model/model.dart';
 
 // Repository untuk menangani logika bisnis terkait data ongkir
 class HomeRepository {

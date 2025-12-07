@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:depd_mvvm_2025/model/model.dart';
-import 'package:depd_mvvm_2025/data/response/api_response.dart';
-import 'package:depd_mvvm_2025/data/response/status.dart';
-import 'package:depd_mvvm_2025/repository/home_repository.dart';
+import 'package:afl3depd/model/model.dart';
+import 'package:afl3depd/data/response/api_response.dart';
+import 'package:afl3depd/data/response/status.dart';
+import 'package:afl3depd/repository/home_repository.dart';
 
 // ViewModel untuk mengelola data dan state Home (provinsi, kota, ongkir)
 class HomeViewModel with ChangeNotifier {
@@ -13,7 +13,6 @@ class HomeViewModel with ChangeNotifier {
   ApiResponse<List<Province>> provinceList = ApiResponse.notStarted();
   setProvinceList(ApiResponse<List<Province>> response) {
     provinceList = response;
-    // Untuk memberitahu semua widget yang sedang mendengarkan (listening) bahwa ketika ada perubahan data yang terjadi, maka widget tersebut perlu di-rebuild (render ulang).
     notifyListeners();
   }
 
@@ -21,22 +20,19 @@ class HomeViewModel with ChangeNotifier {
   Future getProvinceList() async {
     if (provinceList.status == Status.completed) return;
     setProvinceList(ApiResponse.loading());
-    // Panggil repository untuk fetch data dan sesuaikan output berdasarkan statusnya
     _homeRepo
-        // fetchProvinceList() akan mengembalikan Future<List<Province>>
         .fetchProvinceList()
-        // Menggunakan then untuk menangani hasil sukses
         .then((value) {
           setProvinceList(ApiResponse.completed(value));
         })
-        // Menggunakan onError untuk menangani error
         .onError((error, _) {
           setProvinceList(ApiResponse.error(error.toString()));
         });
   }
 
+  // === PERBAIKAN DI SINI (Ubah Key Cache jadi String) ===
   // Cache kota per id provinsi agar tidak panggil API berulang
-  final Map<int, List<City>> _cityCache = {};
+  final Map<String, List<City>> _cityCache = {};
 
   // State daftar kota asal
   ApiResponse<List<City>> cityOriginList = ApiResponse.notStarted();
@@ -45,8 +41,9 @@ class HomeViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  // === PERBAIKAN DI SINI (Parameter ubah jadi String) ===
   // Ambil kota asal
-  Future getCityOriginList(int provId) async {
+  Future getCityOriginList(String provId) async {
     if (_cityCache.containsKey(provId)) {
       setCityOriginList(ApiResponse.completed(_cityCache[provId]!));
       return;
@@ -70,8 +67,9 @@ class HomeViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  // === PERBAIKAN DI SINI (Parameter ubah jadi String) ===
   // Ambil kota tujuan
-  Future getCityDestinationList(int provId) async {
+  Future getCityDestinationList(String provId) async {
     if (_cityCache.containsKey(provId)) {
       setCityDestinationList(ApiResponse.completed(_cityCache[provId]!));
       return;
@@ -102,7 +100,7 @@ class HomeViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  // Hitung biaya pengiriman (set loading + handle success/error). Terdapat objek yang merepresentasikan nilai (atau error) yang akan tersedia di masa depan (asynchronous)
+  // Hitung biaya pengiriman
   Future checkShipmentCost(
     String origin,
     String originType,

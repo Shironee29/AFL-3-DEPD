@@ -3,13 +3,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:depd_mvvm_2025/data/app_exception.dart';
-import 'package:depd_mvvm_2025/data/network/base_api_service.dart';
-import 'package:depd_mvvm_2025/shared/shared.dart';
-
-import '../../shared/shared.dart';
-import '../app_exception.dart';
-import 'base_api_service.dart';
+import 'package:afl3depd/data/app_exception.dart';
+import 'package:afl3depd/data/network/base_api_service.dart';
+import 'package:afl3depd/shared/shared.dart';
 
 /// Implementasi BaseApiServices untuk menangani request GET, POST ke API RajaOngkir.
 class NetworkApiServices implements BaseApiServices {
