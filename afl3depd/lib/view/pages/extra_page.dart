@@ -1,13 +1,13 @@
 part of 'pages.dart';
 
-class BonusPage extends StatefulWidget {
-  const BonusPage({super.key});
+class ExtraPage extends StatefulWidget {
+  const ExtraPage({super.key});
 
   @override
-  State<BonusPage> createState() => _BonusPageState();
+  State<ExtraPage> createState() => _ExtraPageState();
 }
 
-class _BonusPageState extends State<BonusPage> {
+class _ExtraPageState extends State<ExtraPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

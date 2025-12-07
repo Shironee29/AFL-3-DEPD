@@ -7,5 +7,5 @@ import 'package:afl3depd/data/response/status.dart';
 
 part 'home_page.dart';
 part 'international_page.dart';
-part 'bonus_page.dart';
+part 'extra_page.dart';
 part 'main_page.dart';
